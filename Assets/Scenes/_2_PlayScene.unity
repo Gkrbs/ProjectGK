@@ -323,7 +323,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Day 1
+  m_text: Day 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5bfa6fb6fdb253645a35bae7a81e3ce0, type: 2}
   m_sharedMaterial: {fileID: 4917662075258184094, guid: 5bfa6fb6fdb253645a35bae7a81e3ce0,
@@ -902,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b969d7faaef11d340b70a233576b05eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blackoutPanel: {fileID: 1950987559}
 --- !u!1 &1247157438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1950987560
 RectTransform:
   m_ObjectHideFlags: 0

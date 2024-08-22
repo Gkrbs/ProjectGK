@@ -50,6 +50,7 @@ public class SettingTabsControl : MonoBehaviour
     {
         if (Option == null) return;
         GameManager.instance.isSettingOpen = !GameManager.instance.isSettingOpen;
+        GameManager.instance.UIOnOff();
         if (GameManager.instance.isSettingOpen)
         {
             Option.SetActive(GameManager.instance.isSettingOpen);
