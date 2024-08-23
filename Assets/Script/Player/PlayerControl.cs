@@ -89,18 +89,14 @@ public class PlayerControl : MonoBehaviour
     {
         if (!context.started) return;
         if (searcher.item == null) return;
-        QuestItem item = searcher.item.GetComponent<QuestItem>();
+        InteractionItemInterface item = searcher.item.GetComponent<InteractionItemInterface>();
 
         if (item != null)
         { 
+            //퀘스트 아이템 종류에 따라 애니메이션 바꾸도록 할까 고민중
+            //Tag로 식별하거나 또는 ItemID를 통해 식별할 예정
             item.Interaction();
-            if (!item.gameObject.activeSelf)
-            {
-                //searcher.
-            }
         }
-
-
     }
 
     private IEnumerator WaitForLanding()
