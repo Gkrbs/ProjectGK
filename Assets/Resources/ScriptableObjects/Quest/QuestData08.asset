@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aece9d440d41e8a409335f198d1bd53a, type: 3}
   m_Name: QuestData08
   m_EditorClassIdentifier: 
-  clearCount: 1
+  clearCount: 2
   questId: QUEST_08
   name: "\uAE38 \uC704 \uC5BC\uB8E9 \uB2E6\uAE30"
   info: "\uAE38 \uC704 \uC5BC\uB8E9 \uB2E6\uAE30"

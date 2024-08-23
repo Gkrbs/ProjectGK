@@ -27,10 +27,12 @@ public class PlayerControl : MonoBehaviour
     private Vector2 _input;
     private Vector3 _direction;
     private CharacterController cc;
+    private ObjectSearcher searcher;
 
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
+        searcher = GetComponentInChildren<ObjectSearcher>();
     }
 
     private void ApplyGravity()
@@ -81,6 +83,24 @@ public class PlayerControl : MonoBehaviour
             if (!IsGround()) return;
         }
         _velocity += _jumpForce;
+    }
+
+    public void Interaction(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        if (searcher.item == null) return;
+        QuestItem item = searcher.item.GetComponent<QuestItem>();
+
+        if (item != null)
+        { 
+            item.Interaction();
+            if (!item.gameObject.activeSelf)
+            {
+                //searcher.
+            }
+        }
+
+
     }
 
     private IEnumerator WaitForLanding()
