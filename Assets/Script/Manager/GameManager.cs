@@ -11,9 +11,14 @@ public class GameManager : MonoBehaviour
 
     public bool isGameClear = false;
     public bool isAnormal = false;
+
     private const int INIT_DATE = 0;
-    private const int TIME_TURNOFF = 4;
+    private const int TURNOFF_DATE = 4;
     private const int CLEAR_DATE = 13;
+
+    public Material daySkyBox;
+    public Material nightSkyBox;
+
     public enum DAY
     {
         DAY,
@@ -28,7 +33,6 @@ public class GameManager : MonoBehaviour
             return date;
         }
     }
-    public GameObject CommuterBus;
 
     // Start is called before the first frame update
     private void Awake()
@@ -49,9 +53,14 @@ public class GameManager : MonoBehaviour
     {
         isUIOpen = isSettingOpen;
     }
-    void SetAcitveBus(bool active)
+    public void Initialize()
     {
-        CommuterBus.SetActive(active);
+        isGameClear = false;
+        date = INIT_DATE;
+        currentDay = DAY.DAY;
+        // 퀘스트 이니셜라이즈
+        QuestManager.instance.InstallQuest();
+        // 이상현상 이니셜라이즈
     }
     //침대에 상호작용시 작동
     public void GoToNextDate()
@@ -61,21 +70,22 @@ public class GameManager : MonoBehaviour
             date += 1;
             switch (date)
             {
-                case int n when (n < TIME_TURNOFF):
-                    currentDay = DAY.DAY;
+                case int n when (n < TURNOFF_DATE):
+                    ChangeDay(DAY.DAY);
                     // 퀘스트 초기화후 고르기
+                    QuestManager.instance.InstallQuest();
                     break;
                 case int n when (n < CLEAR_DATE):
-                    currentDay = DAY.NIGHT;
+                    ChangeDay(DAY.NIGHT);
                     // 퀘스트 초기화후 고르기
+                    QuestManager.instance.InstallQuest();
                     // 이상현상 초기화후 고르기
                     break;
                 case CLEAR_DATE:
-                    currentDay = DAY.DAY;
+                    ChangeDay(DAY.DAY);
                     // 퀘스트 없음
                     // 이상현상 없음
                     // 버스 출발
-                    SetAcitveBus(true);
                     isGameClear = true;
                     break;
             }
@@ -86,11 +96,12 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
     public bool isCompleteAllMission()
     {
         switch (date)
         {
-            case int n when (n < TIME_TURNOFF):
+            case int n when (n < TURNOFF_DATE):
                 if (QuestManager.instance.IS_CLEAR)
                     return true;
                 break;
@@ -116,23 +127,34 @@ public class GameManager : MonoBehaviour
     public void MissionFailed()
     {
         isGameClear = false;
-        if (date < TIME_TURNOFF)
+        if (date < TURNOFF_DATE)
         {
             date = INIT_DATE;
             currentDay = DAY.DAY;
         }
         else if (date < CLEAR_DATE)
         {
-            date = TIME_TURNOFF;
+            date = TURNOFF_DATE;
             currentDay = DAY.NIGHT;
         }
     }
-    public void Initialize()
+    public void ChangeDay(DAY day)
     {
-        isGameClear = false;
-        date = INIT_DATE;
-        currentDay = DAY.DAY;
-        // 퀘스트 이니셜라이즈
-        // 이상현상 이니셜라이즈
+        if (currentDay == day)
+            return;
+        currentDay = day;
+        switch (currentDay)
+        {
+            case DAY.DAY:
+                if (daySkyBox == null )
+                    return;
+                RenderSettings.skybox = daySkyBox;
+                break;
+            case DAY.NIGHT:
+                if (nightSkyBox == null)
+                    return;
+                RenderSettings.skybox = nightSkyBox;
+                break;
+        }
     }
 }

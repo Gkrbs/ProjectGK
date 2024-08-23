@@ -47,4 +47,5 @@ MonoBehaviour:
   questItemPath: Prefabs\Quest\QuestItem
   data: {fileID: 11400000, guid: 74a55b57f9667f44aa7b140c39aa0fd8, type: 2}
   questItems: []
-  questItemPos: []
+  questItemPos:
+  - {fileID: 0}
