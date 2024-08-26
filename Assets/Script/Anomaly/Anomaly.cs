@@ -23,6 +23,7 @@ public class Anomaly : MonoBehaviour
     // 기본, 진입, 실행, 종료 순인가
     // 트리거 밟으면 enter - 진행중 interAction - 이상현상 보고 완료시 or 실패시 exit - 기본은 default
 
+    // 시작과 동시에 실행되는 경우, 트리거 발동 시 실행
 
     public virtual void Init() // 이상현상 내부 초기화용 함수
     {
