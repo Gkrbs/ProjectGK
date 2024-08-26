@@ -1405,8 +1405,8 @@ MonoBehaviour:
   AudioVolume: 0.5
   FadeAudioSpeed: 0.5
   FinishSoundVolume: 0.1
-  FinishSound: {fileID: 8300000, guid: 65d0d7b7bb1f4da48ae60c2161b317d8, type: 3}
-  BackgroundAudio: {fileID: 8300000, guid: ebd5e571713eb294daad623217be8c34, type: 3}
+  FinishSound: {fileID: 0}
+  BackgroundAudio: {fileID: 0}
   onLoaded:
     m_PersistentCalls:
       m_Calls: []
@@ -1420,7 +1420,7 @@ AudioSource:
   m_GameObject: {fileID: 174664}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -1988319926176824120, guid: c50dd96c726209e4c989a91fcd96c2c5,
+  OutputAudioMixerGroup: {fileID: -310253314590168517, guid: 863eec4f460c0bb4c83c02c5e786e062,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1

@@ -8,6 +8,7 @@ public class MainMenuControl : MonoBehaviour
     [SerializeField] SettingTabsControl settingTabsControl;
     [SerializeField] GameObject settingPanel;
     [SerializeField] GameObject exitGameCheckPanel;
+    
     private void Start()
     {
         if (settingPanel == null)
@@ -17,6 +18,10 @@ public class MainMenuControl : MonoBehaviour
     }
     private void Update()
     {
+        if (settingPanel == null)
+            settingPanel = GameObject.Find("SettingPanel");
+        if (settingTabsControl == null)
+            settingTabsControl = GameObject.Find("SettingManager").GetComponent<SettingTabsControl>();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -31,12 +36,16 @@ public class MainMenuControl : MonoBehaviour
     }
     public void StartButton()
     {
+        if (settingTabsControl == null)
+            settingTabsControl = GameObject.Find("SettingManager").GetComponent<SettingTabsControl>();
         //씬로드 애니메이션 나오게
         settingTabsControl.GoToLobbyButton.SetActive(true);
-        LoadSceneManager.instance.LoadScene(Scenes.play);
+        //LoadSceneManager.instance.LoadScene(Scenes.play);
     }
     public void SettingButton()
     {
+        if (settingTabsControl == null)
+            settingTabsControl = GameObject.Find("SettingManager").GetComponent<SettingTabsControl>();
         settingTabsControl.OptionControl();
     }
     public void ExitButton()
