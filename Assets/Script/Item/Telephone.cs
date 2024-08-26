@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Telephone : MonoBehaviour, InteractionItemInterface
+public class Telephone : Item
 {
-
-    public void Init(string itemId)
+    public override void Init(string itemId)
     {
+        base.Init(itemId);
     }
 
-    public void Interaction()
+    public override void Interaction()
     {
         //GameManager에 이상현상 발견을 알리는 코드 삽입
+        base.Interaction();
     }
 }

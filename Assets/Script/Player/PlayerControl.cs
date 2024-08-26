@@ -89,7 +89,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!context.started) return;
         if (searcher.item == null) return;
-        InteractionItemInterface item = searcher.item.GetComponent<InteractionItemInterface>();
+        Item item = searcher.item.GetComponent<Item>();
 
         if (item != null)
         { 
