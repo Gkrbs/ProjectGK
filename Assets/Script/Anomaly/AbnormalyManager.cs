@@ -14,7 +14,8 @@ public class AbnormalyManager : MonoBehaviour
     public List<Abnormaly> currentAbnomaliesList = new List<Abnormaly>(); // 게임 진행시 이상현상 담아둘 리스트
     public List<Abnormaly> usedAbnomaliesList = new List<Abnormaly>(); // 게임 진행시 클리어된 이상현상 리스트
     
-    public Abnormaly currentAbnomaly; // 현재 배치된 이상현상
+    public Abnormaly currentAbnomaly = null; // 현재 배치된 이상현상
+    public Abnormaly delayAbnomaly = null; // 현재 배치된 이상현상
 
     public bool isEnabled;
 
@@ -33,21 +34,32 @@ public class AbnormalyManager : MonoBehaviour
         isEnabled = Random.Range(0, 2) == 1 ? true : false;
 
         if (!isEnabled)
+        {
+            if (currentAbnomaly != null)
+                currentAbnomaly.ReSet();
+            
             return;
+        }
+
+        if (delayAbnomaly != null)
+        {
+            currentAbnomaliesList.Add(delayAbnomaly);
+            delayAbnomaly = null;
+        }
+
+        if (currentAbnomaly != null)
+        {
+            Abnormaly ab = currentAbnomaly;
+            ab.ReSet();
+            currentAbnomaly = null;
+            delayAbnomaly = ab;
+        }
 
         int random = Random.Range(0, currentAbnomaliesList.Count);
         Abnormaly selectedAbnormaly = currentAbnomaliesList[random];
         currentAbnomaliesList.RemoveAt(random);
-        usedAbnomaliesList.Add(selectedAbnormaly);
         currentAbnomaly = selectedAbnormaly;
         currentAbnomaly.ReInit();
-    }
-
-    public void AnomalyReset()
-    {        
-        if (currentAbnomaly == null)
-            return;
-        currentAbnomaly.ReSet();
     }
 
     //이상현상 클리어 될 시 호출 해야하는 함수
@@ -62,6 +74,11 @@ public class AbnormalyManager : MonoBehaviour
     // 이상현상 리스트 리셋
     public void AnomalyListReset()
     {
+        foreach (Abnormaly abnormal in usedAbnomaliesList)
+        {
+            abnormal.isClear = false;
+        }
+
         currentAbnomaliesList.AddRange(usedAbnomaliesList);
         usedAbnomaliesList.Clear();
     }
