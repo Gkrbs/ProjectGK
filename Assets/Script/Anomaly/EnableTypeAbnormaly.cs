@@ -17,10 +17,6 @@ public class EnableTypeAbnormaly : Abnormaly
     public override void ReSet()
     {
         base.ReSet();
-    }
-
-    private void OnEnable()
-    {
         Trigger(null);
     }
 

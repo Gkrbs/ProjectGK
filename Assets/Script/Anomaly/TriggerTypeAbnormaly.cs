@@ -23,6 +23,18 @@ public class TriggerTypeAbnormaly : Abnormaly
     {
         Init();
     }
+    public override void ReInit()
+    {
+        base.ReInit();
+        if (playAbnormal)
+            trigger.gameObject.SetActive(true);
+    }
+    public override void ReSet()
+    {
+        base.ReSet();
+        trigger.gameObject.SetActive(false);
+
+    }
 
     public override void Init(string id = "")
     {

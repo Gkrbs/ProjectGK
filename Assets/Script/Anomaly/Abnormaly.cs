@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Abnormaly : MonoBehaviour, AbnormalInterface
 {
+    public bool isClear = false;
+    public bool playAbnormal = false;
+
     protected GameObject[] abnormalObjects;
     
     protected delegate void PlayDelegate();
@@ -20,15 +23,25 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
         }
     }
 
+    public virtual void ReInit()
+    {
+        playAbnormal = true;
+    }
+
     public virtual void Trigger(GameObject other)
     {
+        if (!playAbnormal) return;
+
         if (PlayEvent != null)
             PlayEvent();
     }
 
     public virtual void ReSet()
     {
+        if (!playAbnormal) return;
+
         if (ResetEvent != null)
             ResetEvent();
+        playAbnormal = false;
     }
 }
