@@ -40,16 +40,25 @@ public class AbnormalyManager : MonoBehaviour
         currentAbnomaliesList.RemoveAt(random);
         usedAbnomaliesList.Add(selectedAbnormaly);
         currentAbnomaly = selectedAbnormaly;
-        currentAbnomaly.Init();
+        currentAbnomaly.ReInit();
     }
 
     public void AnomalyReset()
     {        
         if (currentAbnomaly == null)
             return;
-        currentAbnomaly.Init();      
+        currentAbnomaly.ReSet();
     }
-  
+
+    //이상현상 클리어 될 시 호출 해야하는 함수
+    public void ClearAnormaly()
+    {
+        currentAbnomaly.isClear = true;
+        Abnormaly abnormaly = currentAbnomaly;
+        usedAbnomaliesList.Add(abnormaly);
+        currentAbnomaly = null;
+    }
+
     // 이상현상 리스트 리셋
     public void AnomalyListReset()
     {
