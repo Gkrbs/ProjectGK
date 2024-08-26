@@ -18,14 +18,10 @@ public class Quest : MonoBehaviour
     private QuestData data;
 
     public QuestItem[] questItems;
-    public Transform[] questItemPos;
+    
     public delegate void SetUIDelegate(string name, string info, int cnt, int maxCnt, bool isClear);
     public event SetUIDelegate SetUIEvent;
     public bool IS_CLEAR => isClear;
-    //public int CLEAR_COUNT => clearCount;
-    //public int MAX_CLEAR_COUNT => maxClearCount;
-    //public string INFO => info;
-    //public string NAME => name;
 
     public void Init()
     {
@@ -45,24 +41,30 @@ public class Quest : MonoBehaviour
         questId = data.questId;
         questItems = new QuestItem[maxClearCount];
 
-        for (int i = 0; i < questItems.Length; i++)
+        foreach(QuestItem item in questItems)
         {
-            QuestItem item = Resources.Load<QuestItem>(questItemPath);
-
-            questItems[i] = Instantiate<QuestItem>(item, transform);
-            questItems[i].gameObject.name = "QuestItem" + (i + 1).ToString("D2");
-
-            if (questItemPos.Length > 0)
-            {
-                if (questItemPos[i] != null)
-                {
-                    questItems[i].gameObject.transform.position = questItemPos[i].position;
-                    questItems[i].gameObject.transform.rotation = questItemPos[i].rotation;
-                }
-            }
-            questItems[i].InteractionEvent += AddClearCount;
-            questItems[i].gameObject.SetActive(false);
+            item.InteractionEvent += AddClearCount;
+            item.gameObject.SetActive(false);
         }
+
+        //for (int i = 0; i < questItems.Length; i++)
+        //{
+        //    QuestItem item = Resources.Load<QuestItem>(questItemPath);
+
+        //    questItems[i] = Instantiate<QuestItem>(item, transform);
+        //    questItems[i].gameObject.name = "QuestItem" + (i + 1).ToString("D2");
+
+        //    if (questItemPos.Length > 0)
+        //    {
+        //        if (questItemPos[i] != null)
+        //        {
+        //            questItems[i].gameObject.transform.position = questItemPos[i].position;
+        //            questItems[i].gameObject.transform.rotation = questItemPos[i].rotation;
+        //        }
+        //    }
+        //    questItems[i].InteractionEvent += AddClearCount;
+        //    questItems[i].gameObject.SetActive(false);
+        //}
         isInit = true;
 
     }
