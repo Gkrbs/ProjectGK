@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7decf71d60cb2fe438b4d9a0a160a517, type: 3}
+  m_Name: SceneLoaderManager
+  m_EditorClassIdentifier: 
+  loadingScreenMode: 1
+  sceneList:
+  - SceneName: TitleScene
+    SceneAsset: {fileID: 102900000, guid: e2da6b932759eb34293efc7ff0a0991b, type: 3}
+    DisplayName: TitleScene
+    Description: 
+    SkipType: 0
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds:
+    - {fileID: 21300000, guid: e5a74a4340c61ae48b6383a3296341cf, type: 3}
+    - {fileID: 21300000, guid: 95d946d745d8f6d4bb3b1bef05776408, type: 3}
+  - SceneName: PlayScene
+    SceneAsset: {fileID: 102900000, guid: 2fd04b0610274b24ea6c483185873c4e, type: 3}
+    DisplayName: PlayScene
+    Description: 
+    SkipType: 0
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds:
+    - {fileID: 21300000, guid: aba4920282ca24849acb3fb566de4cca, type: 3}
+    - {fileID: 21300000, guid: 95d946d745d8f6d4bb3b1bef05776408, type: 3}
+    - {fileID: 21300000, guid: e5a74a4340c61ae48b6383a3296341cf, type: 3}
+  - SceneName: EndingScene
+    SceneAsset: {fileID: 102900000, guid: 24f25eb0b50c19744b75bf4064f0062c, type: 3}
+    DisplayName: EndingScene
+    Description: 
+    SkipType: 0
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds:
+    - {fileID: 21300000, guid: 95d946d745d8f6d4bb3b1bef05776408, type: 3}
+    - {fileID: 21300000, guid: e5a74a4340c61ae48b6383a3296341cf, type: 3}
+  tipsList:
+  - You can fire a grapple while jumping.
+  - Pressing the Shift key on icy footholds can cause you to slip and fall.
+  - Pressing the Move key while in a grapple can give recoil.
+  - Jetpeck items last 3 seconds.
+  - Follow the light, when you don't know where to go next.
+  - Walls made from wall spawn items can be climbed or grappled with.
+  - You can only grapple where the circle in the center of the screen is blue.
+  buildSettingsAsFallback: 0
+  useSynchronousAsFallback: 1
