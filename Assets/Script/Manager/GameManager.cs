@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameClear = false;
     public bool isAnormal = false;
-
+    public bool isCall = false;
     private const int INIT_DATE = 0;
     private const int TURNOFF_DATE = 4;
     private const int CLEAR_DATE = 13;
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
                     // 퀘스트 초기화후 고르기
                     QuestManager.instance.InstallQuest();
                     // 이상현상 초기화후 고르기
+                    //AbnormalManager.instance.AnomalyInstall();
                     break;
                 case CLEAR_DATE:
                     ChangeDay(DAY.DAY);
@@ -96,7 +97,12 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
+    public void CallAbnormal()
+    {
+        isCall = true;
+        // 이상현상이 있으면 성공
+        // 이상현상이 없으면 실패
+    }
     public bool isCompleteAllMission()
     {
         switch (date)
@@ -110,10 +116,15 @@ public class GameManager : MonoBehaviour
                 {
                     // 이상현상 있을때
                     // 전화걸면
-                    return true;
+                    if (isCall)
+                        return true;
+                    else
+                        return false;
                 }
                 else
                 {
+                    if (isCall)
+                        return false;
                     // 이상현상 없을때
                     if (QuestManager.instance.IS_CLEAR)
                         return true;
