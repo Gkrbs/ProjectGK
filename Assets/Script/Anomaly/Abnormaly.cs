@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class Abnormaly : MonoBehaviour, AbnormalInterface
 {
-    public void Init(string id ="")
+    protected GameObject[] abnormalObjects;
+    
+    protected delegate void PlayDelegate();
+    protected event PlayDelegate PlayEvent;
+    protected event PlayDelegate ResetEvent;
+
+    public virtual void Init(string id ="")
     {
-        throw new System.NotImplementedException();
+        foreach (GameObject item in abnormalObjects)
+        {
+            AbnormalyItem aItem = item.GetComponent<AbnormalyItem>();
+            PlayEvent += aItem.PlayEvent;
+            ResetEvent += aItem.ResetEvent;
+        }
     }
 
-    public void Trigger()
+    public virtual void Trigger(GameObject other)
     {
-        throw new System.NotImplementedException();
+        if (PlayEvent != null)
+            PlayEvent();
+    }
+
+    public virtual void ReSet()
+    {
+        if (ResetEvent != null)
+            ResetEvent();
     }
 }
