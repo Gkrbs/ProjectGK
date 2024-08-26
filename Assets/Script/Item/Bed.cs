@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Telephone : Item
+public class Bed : Item
 {
     public override void Init(string itemId = "")
     {
         base.Init(itemId);
         if (GameManager.instance != null)
-            InteractionEvent += GameManager.instance.CallAbnormal;
+            InteractionEvent += GameManager.instance.GoToNextDate;
     }
 
     public override void Interaction()
@@ -16,7 +16,6 @@ public class Telephone : Item
         //GameManager에 이상현상 발견을 알리는 코드 삽입
         base.Interaction();
     }
-
     private void Start()
     {
         Init();
