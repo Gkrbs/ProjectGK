@@ -11,43 +11,50 @@ public class AbnormalyManager : MonoBehaviour
 
     public static AbnormalyManager instance;
 
-    public List<Abnormaly> currentAnomaliesList = new List<Abnormaly>(); // 게임 진행시 이상현상 담아둘 리스트
-    public List<Abnormaly> usedAnomaliesList = new List<Abnormaly>(); // 게임 진행시 클리어된 이상현상 리스트
+    public List<Abnormaly> currentAbnomaliesList = new List<Abnormaly>(); // 게임 진행시 이상현상 담아둘 리스트
+    public List<Abnormaly> usedAbnomaliesList = new List<Abnormaly>(); // 게임 진행시 클리어된 이상현상 리스트
     
-    public Abnormaly currentAnomaly; // 현재 배치된 이상현상
+    public Abnormaly currentAbnomaly; // 현재 배치된 이상현상
+
+    public bool isEnabled;
 
     public int random;  
 
 
     // 이상현상 배정
-    public void AnomalyInstall()
+    public void AbnomalyInstall()
     {
         // 1. 랜덤한 숫자를 뽑는다
         // 2. 그 숫자에 맞는 index에 위치한 이상현상을 가져온다
         // 3. 이상현상을 currentAnomaly에 배치한다
         // 4-1 꺼내진 이상현상을 리스트에서 제외하고 clear로 옮긴다
         // 4-2 클리어 여부를 확인하고 리스트에서 제외하고 clear로 옮긴다
-        
-        int random = Random.Range(0, currentAnomaliesList.Count);
-        Abnormaly selectedAbnormaly = currentAnomaliesList[random];
-        currentAnomaliesList.RemoveAt(random);
-        usedAnomaliesList.Add(selectedAbnormaly);
-        currentAnomaly = selectedAbnormaly;
-        currentAnomaly.Init();
+
+        isEnabled = Random.Range(0, 2) == 1 ? true : false;
+
+        if (!isEnabled)
+            return;
+
+        int random = Random.Range(0, currentAbnomaliesList.Count);
+        Abnormaly selectedAbnormaly = currentAbnomaliesList[random];
+        currentAbnomaliesList.RemoveAt(random);
+        usedAbnomaliesList.Add(selectedAbnormaly);
+        currentAbnomaly = selectedAbnormaly;
+        currentAbnomaly.Init();
     }
 
     public void AnomalyReset()
     {        
-        if (currentAnomaly == null)
+        if (currentAbnomaly == null)
             return;
-        currentAnomaly.Init();      
+        currentAbnomaly.Init();      
     }
   
     // 이상현상 리스트 리셋
     public void AnomalyListReset()
     {
-        currentAnomaliesList.AddRange(usedAnomaliesList);
-        usedAnomaliesList.Clear();
+        currentAbnomaliesList.AddRange(usedAbnomaliesList);
+        usedAbnomaliesList.Clear();
     }
 
     private void Awake()
