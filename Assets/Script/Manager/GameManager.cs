@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool isGameClear = false;
     public bool isAnormal = false;
     public bool isCall = false;
+
     private const int INIT_DATE = 0;
     private const int TURNOFF_DATE = 4;
     private const int CLEAR_DATE = 13;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Material daySkyBox;
     public Material nightSkyBox;
 
+    public string endingSceneName;
     public enum DAY
     {
         DAY,
@@ -33,8 +35,6 @@ public class GameManager : MonoBehaviour
             return date;
         }
     }
-
-    // Start is called before the first frame update
     private void Awake()
     {
         if (instance == null)
@@ -45,10 +45,6 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-
-    // 침대 상호작용시 다음날로 넘길것인지 체크하기
-    // 실패시 초기화 하기
-    //
     public void UIOnOff()
     {
         isUIOpen = isSettingOpen;
@@ -65,6 +61,7 @@ public class GameManager : MonoBehaviour
     //침대에 상호작용시 작동
     public void GoToNextDate()
     {
+        Debug.Log("다음날" + DATE);
         if (isCompleteAllMission())
         {
             date += 1;
@@ -80,7 +77,7 @@ public class GameManager : MonoBehaviour
                     // 퀘스트 초기화후 고르기
                     QuestManager.instance.InstallQuest();
                     // 이상현상 초기화후 고르기
-                    //AbnormalManager.instance.AnomalyInstall();
+                    AbnormalyManager.instance.AbnomalyInstall();
                     break;
                 case CLEAR_DATE:
                     ChangeDay(DAY.DAY);
@@ -95,13 +92,13 @@ public class GameManager : MonoBehaviour
         {
             MissionFailed();
         }
-
+        isCall = false;
     }
     public void CallAbnormal()
     {
+        Debug.Log("전화");
         isCall = true;
-        // 이상현상이 있으면 성공
-        // 이상현상이 없으면 실패
+        AbnormalyManager.instance.ClearAnormaly();
     }
     public bool isCompleteAllMission()
     {
@@ -112,10 +109,8 @@ public class GameManager : MonoBehaviour
                     return true;
                 break;
             case int n when (n < CLEAR_DATE):
-                if (isAnormal)
+                if (AbnormalyManager.instance.isEnabled)
                 {
-                    // 이상현상 있을때
-                    // 전화걸면
                     if (isCall)
                         return true;
                     else
@@ -125,7 +120,6 @@ public class GameManager : MonoBehaviour
                 {
                     if (isCall)
                         return false;
-                    // 이상현상 없을때
                     if (QuestManager.instance.IS_CLEAR)
                         return true;
                 }
@@ -141,12 +135,13 @@ public class GameManager : MonoBehaviour
         if (date < TURNOFF_DATE)
         {
             date = INIT_DATE;
-            currentDay = DAY.DAY;
+            ChangeDay(DAY.DAY);
         }
         else if (date < CLEAR_DATE)
         {
             date = TURNOFF_DATE;
-            currentDay = DAY.NIGHT;
+            AbnormalyManager.instance.AnomalyListReset();
+            ChangeDay(DAY.NIGHT);
         }
     }
     public void ChangeDay(DAY day)
@@ -157,7 +152,7 @@ public class GameManager : MonoBehaviour
         switch (currentDay)
         {
             case DAY.DAY:
-                if (daySkyBox == null )
+                if (daySkyBox == null)
                     return;
                 RenderSettings.skybox = daySkyBox;
                 break;
@@ -167,5 +162,17 @@ public class GameManager : MonoBehaviour
                 RenderSettings.skybox = nightSkyBox;
                 break;
         }
+    }
+    public void GetOnBus()
+    {
+        Debug.Log("버스 탐");
+        StartCoroutine(Ending());
+    }
+    IEnumerator Ending()
+    {
+        yield return new WaitForSeconds(3);
+        Initialize();
+        bl_SceneLoaderManager.LoadScene(endingSceneName);
+
     }
 }

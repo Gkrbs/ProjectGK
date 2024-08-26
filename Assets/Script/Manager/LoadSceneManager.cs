@@ -25,7 +25,7 @@ public class LoadSceneManager : MonoBehaviour
     }
     IEnumerator LoadYourAsyncScene(int buildIndex)
     {
-        GameManager.instance.Initialize();
+        //GameManager.instance.Initialize();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(buildIndex);
         while (!asyncLoad.isDone)
         {

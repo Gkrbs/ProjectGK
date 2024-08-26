@@ -83,6 +83,6 @@ public class SettingTabsControl : MonoBehaviour
         GoToLobbyButton.SetActive(false);
         GoToLobbyCheckPanel.SetActive(false);
         OptionControl();
-        LoadSceneManager.instance.LoadScene(0);
+        //LoadSceneManager.instance.LoadScene(0);
     }
 }
