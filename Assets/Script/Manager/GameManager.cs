@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool isGameClear = false;
     public bool isAnormal = false;
     public bool isCall = false;
+
+    public Image fadeInOutImage;
 
     private const int INIT_DATE = 0;
     private const int TURNOFF_DATE = 4;
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
         // 퀘스트 이니셜라이즈
         QuestManager.instance.InstallQuest();
         // 이상현상 이니셜라이즈
+        AbnormalyManager.instance.AbnomalyInstall();
     }
     //침대에 상호작용시 작동
     public void GoToNextDate()
@@ -166,13 +169,14 @@ public class GameManager : MonoBehaviour
     public void GetOnBus()
     {
         Debug.Log("버스 탐");
-        StartCoroutine(Ending());
+        if(isGameClear)
+            StartCoroutine(Ending());
     }
     IEnumerator Ending()
     {
-        yield return new WaitForSeconds(3);
-        Initialize();
         bl_SceneLoaderManager.LoadScene(endingSceneName);
-
+        yield return null;
     }
+
+
 }
