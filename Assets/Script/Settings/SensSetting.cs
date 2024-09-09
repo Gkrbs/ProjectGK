@@ -27,10 +27,7 @@ public class SensSetting : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
-        else
-            Destroy(this.gameObject);
         if (PlayerPrefs.HasKey("XSpeed"))
         {
             LoadValue();

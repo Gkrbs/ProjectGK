@@ -9,7 +9,8 @@ public class SettingTabsControl : MonoBehaviour
     {
         GRAPHIC,
         AUDIO,
-        CONTROL
+        CONTROL,
+        GAME
     }
     public GameObject Option;
     public List<GameObject> Panels = new();
