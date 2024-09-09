@@ -18,7 +18,7 @@ public class Quest : MonoBehaviour
     private QuestData data;
 
     public QuestItem[] questItems;
-    
+
     public delegate void SetUIDelegate(string name, string info, int cnt, int maxCnt, bool isClear);
     public event SetUIDelegate SetUIEvent;
     public bool IS_CLEAR => isClear;
@@ -35,13 +35,13 @@ public class Quest : MonoBehaviour
 
         isClear = false;
         clearCount = 0;
-        maxClearCount = data.clearCount;
         name = data.name;
         info = data.info;
         questId = data.questId;
-        questItems = new QuestItem[maxClearCount];
+        maxClearCount = questItems.Length;
+        data.clearCount = maxClearCount;
 
-        foreach(QuestItem item in questItems)
+        foreach (Item item in questItems)
         {
             item.InteractionEvent += AddClearCount;
             item.gameObject.SetActive(false);
