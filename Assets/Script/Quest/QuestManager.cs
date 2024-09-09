@@ -18,7 +18,7 @@ public class QuestManager : MonoBehaviour
 
     public bool IS_CLEAR
     {
-        get 
+        get
         {
             if (currentQuest == null) return true;
 
@@ -32,16 +32,18 @@ public class QuestManager : MonoBehaviour
             questName.text = name;
 
         if (questInfo != null)
+        {
             questInfo.text = info;
 
-        if (maxCnt != 0)
-            questInfo.text = questInfo.text + " (" + cnt + "/" + maxCnt + ")";
+            if (maxCnt != 0)
+                questInfo.text = questInfo.text + " (" + cnt + "/" + maxCnt + ")";
 
-        //퀘스트클리어시 이펙트같은 것을 넣는것도 고려 중
-        if (isClear)
-            questInfo.color = Color.gray;
-        else
-            questInfo.color = Color.black;
+            //퀘스트클리어시 이펙트같은 것을 넣는것도 고려 중
+            if (isClear)
+                questInfo.color = Color.gray;
+            else
+                questInfo.color = Color.black;
+        }
     }
 
 
