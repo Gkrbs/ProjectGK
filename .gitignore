@@ -71,4 +71,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-*.png
+/[Aa]ssets/[Gg]othic Cemetery Pack in Props/
+/[Aa]ssets/[Gg]othic_Cathedral/
