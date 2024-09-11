@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool isCall = false;
 
     public Image fadeInOutImage;
+    public TMP_Text nextDayText;
 
     private const int INIT_DATE = 0;
     private const int TURNOFF_DATE = 4;
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour
     public void GoToNextDate()
     {
         Debug.Log("다음날" + DATE);
+        FadeInOut(fadeInOutImage, nextDayText, 0.7f);
         if (isCompleteAllMission())
         {
             date += 1;
@@ -169,7 +172,7 @@ public class GameManager : MonoBehaviour
     public void GetOnBus()
     {
         Debug.Log("버스 탐");
-        if(isGameClear)
+        if (isGameClear)
             StartCoroutine(Ending());
     }
     IEnumerator Ending()
@@ -178,5 +181,88 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
+
+    public void FadeInOut(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        StartCoroutine(CoFadeInOut(image, text, fadeOutTime, nextEvent));
+    }
+    public void FadeIn(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        StartCoroutine(CoFadeIn(image, text, fadeOutTime, nextEvent));
+    }
+
+    public void FadeOut(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        StartCoroutine(CoFadeOut(image, text, fadeOutTime, nextEvent));
+    }
+
+    IEnumerator CoFadeInOut(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        Color tempColor = image.color;
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += Time.deltaTime / fadeOutTime;
+            image.color = tempColor;
+            text.color = tempColor;
+            if (tempColor.a >= 1f)
+                tempColor.a = 1f;
+
+            yield return null;
+        }
+        image.color = tempColor;
+        text.color = tempColor;
+        yield return new WaitForSeconds(3.0f);
+
+        while (tempColor.a > 0f)
+        {
+            tempColor.a -= Time.deltaTime / fadeOutTime;
+            image.color = tempColor;
+            text.color = tempColor;
+            if (tempColor.a <= 0f) tempColor.a = 0f;
+
+            yield return null;
+        }
+        image.color = tempColor;
+        text.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
+    // 투명 -> 불투명
+    IEnumerator CoFadeIn(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        Color tempColor = image.color;
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += Time.deltaTime / fadeOutTime;
+            image.color = tempColor;
+            text.color = tempColor;
+            if (tempColor.a >= 1f)
+                tempColor.a = 1f;
+
+            yield return null;
+        }
+
+        image.color = tempColor;
+        text.color = tempColor;
+        if (nextEvent != null)
+            nextEvent();
+    }
+
+    // 불투명 -> 투명
+    IEnumerator CoFadeOut(Image image, TMP_Text text, float fadeOutTime, System.Action nextEvent = null)
+    {
+        Color tempColor = image.color;
+        while (tempColor.a > 0f)
+        {
+            tempColor.a -= Time.deltaTime / fadeOutTime;
+            image.color = tempColor;
+            text.color = tempColor;
+            if (tempColor.a <= 0f) tempColor.a = 0f;
+
+            yield return null;
+        }
+        image.color = tempColor;
+        text.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
 
 }
