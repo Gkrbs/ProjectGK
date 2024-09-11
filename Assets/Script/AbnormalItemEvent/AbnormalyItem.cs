@@ -9,12 +9,17 @@ public class AbnormalyItem : MonoBehaviour
         CHANGE_POS,
         CHANGE_ROTATE,
         ENABLE_OBJECT,
-        CHANGE_OBJECT
+        CHANGE_OBJECT,
+        MOVE_OBJECT
     }
     [SerializeField]
     private ABNORMAL_TYPE type;
     [SerializeField]
     private bool isEnable = true;
+    private bool isMove = false;
+
+    [SerializeField]
+    private float moveSpeed = 5.0f;
 
     [SerializeField]
     private Vector3 targetPos = Vector3.zero;
@@ -54,6 +59,15 @@ public class AbnormalyItem : MonoBehaviour
             targetObj.gameObject.SetActive(true);
     }
 
+    private void MoveObjectEvent()
+    {
+        if (!isMove)
+        { 
+            isMove = true;
+            StartCoroutine(MoveObj());
+        }
+    }
+
     private void ChangeObjectEventReset()
     {
         if (!defaultObj.gameObject.activeSelf)
@@ -74,6 +88,10 @@ public class AbnormalyItem : MonoBehaviour
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(false);
     }
+    private void MoveObjectEventReset()
+    {
+        defaultObj.transform.Translate(-targetPos);
+    }
 
     public void PlayEvent()
     {
@@ -90,6 +108,9 @@ public class AbnormalyItem : MonoBehaviour
                 break;
             case ABNORMAL_TYPE.ENABLE_OBJECT:
                 EnabledObjectEvent();
+                break;
+            case ABNORMAL_TYPE.MOVE_OBJECT:
+                MoveObjectEvent();
                 break;
         }
     }
@@ -109,6 +130,20 @@ public class AbnormalyItem : MonoBehaviour
             case ABNORMAL_TYPE.ENABLE_OBJECT:
                 EnabledObjectEventReset();
                 break;
+            case ABNORMAL_TYPE.MOVE_OBJECT:
+                MoveObjectEventReset();
+                break;
         }
+    }
+    private IEnumerator MoveObj()
+    {
+        Vector3 target = transform.position + targetPos;
+        while (Vector3.Distance(transform.position, targetPos) >= 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed*Time.deltaTime);
+            yield return Time.deltaTime; 
+        }
+        transform.position = target;
+        isMove = false;
     }
 }
