@@ -10,9 +10,10 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
     [SerializeField]
     protected GameObject[] abnormalObjects;
     
-    protected delegate void PlayDelegate();
+    protected delegate void PlayDelegate(GameObject target);
+    protected delegate void ResetDelegate();
     protected event PlayDelegate PlayEvent;
-    protected event PlayDelegate ResetEvent;
+    protected event ResetDelegate ResetEvent;
 
     public virtual void Init(string id ="")
     {
@@ -21,12 +22,17 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
             AbnormalyItem aItem = item.GetComponent<AbnormalyItem>();
             PlayEvent += aItem.PlayEvent;
             ResetEvent += aItem.ResetEvent;
+            item.SetActive(false);
         }
     }
 
     public virtual void ReInit()
     {
         playAbnormal = true;
+        foreach (GameObject item in abnormalObjects)
+        {
+            item.SetActive(true);
+        }
     }
 
     public virtual void Trigger(GameObject other)
@@ -34,7 +40,7 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
         if (!playAbnormal) return;
 
         if (PlayEvent != null)
-            PlayEvent();
+            PlayEvent(other);
     }
 
     public virtual void ReSet()
@@ -43,6 +49,11 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
 
         if (ResetEvent != null)
             ResetEvent();
+
+        foreach (GameObject item in abnormalObjects)
+        {
+            item.SetActive(false);
+        }
         playAbnormal = false;
     }
 }

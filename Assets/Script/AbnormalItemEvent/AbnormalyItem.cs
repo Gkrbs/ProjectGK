@@ -38,28 +38,28 @@ public class AbnormalyItem : MonoBehaviour
         }
     }
 
-    private void ChangeObjectEvent()
+    protected virtual void ChangeObjectEvent(GameObject target = null)
     {
         if (defaultObj.gameObject.activeSelf)
             defaultObj.gameObject.SetActive(false);
         if (!targetObj.gameObject.activeSelf) 
             targetObj.gameObject.SetActive(true);
     }
-    private void ChangePositionEvent()
+    protected virtual void ChangePositionEvent(GameObject target = null)
     {
         defaultObj.transform.Translate(targetPos);
     }
-    private void ChangeRotationEvent()
+    protected virtual void ChangeRotationEvent(GameObject target = null)
     {
         defaultObj.transform.Rotate(targetRot);
     }
-    private void EnabledObjectEvent()
+    protected virtual void EnabledObjectEvent(GameObject target = null)
     {
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(true);
     }
 
-    private void MoveObjectEvent()
+    protected virtual void MoveObjectEvent(GameObject target = null)
     {
         if (!isMove)
         { 
@@ -68,53 +68,53 @@ public class AbnormalyItem : MonoBehaviour
         }
     }
 
-    private void ChangeObjectEventReset()
+    protected virtual void ChangeObjectEventReset(GameObject target = null)
     {
         if (!defaultObj.gameObject.activeSelf)
             defaultObj.gameObject.SetActive(true);
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(false);
     }
-    private void ChangePositionEventReset()
+    protected virtual void ChangePositionEventReset(GameObject target = null)
     {
         defaultObj.transform.Translate(-targetPos);
     }
-    private void ChangeRotationEventReset()
+    protected virtual void ChangeRotationEventReset(GameObject target = null)
     {
         defaultObj.transform.Rotate(-targetRot);
     }
-    private void EnabledObjectEventReset()
+    protected virtual void EnabledObjectEventReset(GameObject target = null)
     {
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(false);
     }
-    private void MoveObjectEventReset()
+    protected virtual void MoveObjectEventReset(GameObject target = null)
     {
         defaultObj.transform.Translate(-targetPos);
     }
 
-    public void PlayEvent()
+    public virtual void PlayEvent(GameObject target = null)
     {
         switch (type)
         {
             case ABNORMAL_TYPE.CHANGE_OBJECT:
-                ChangeObjectEvent();
+                ChangeObjectEvent(target);
                 break;
             case ABNORMAL_TYPE.CHANGE_POS:
-                ChangePositionEvent();
+                ChangePositionEvent(target);
                 break;
             case ABNORMAL_TYPE.CHANGE_ROTATE:
-                ChangeRotationEvent();
+                ChangeRotationEvent(target);
                 break;
             case ABNORMAL_TYPE.ENABLE_OBJECT:
-                EnabledObjectEvent();
+                EnabledObjectEvent(target);
                 break;
             case ABNORMAL_TYPE.MOVE_OBJECT:
-                MoveObjectEvent();
+                MoveObjectEvent(target);
                 break;
         }
     }
-    public void ResetEvent()
+    public virtual void ResetEvent()
     {
         switch (type)
         {
@@ -135,15 +135,15 @@ public class AbnormalyItem : MonoBehaviour
                 break;
         }
     }
-    private IEnumerator MoveObj()
+    private IEnumerator MoveObj(GameObject target = null)
     {
-        Vector3 target = transform.position + targetPos;
+        Vector3 goalTarget = transform.position + targetPos;
         while (Vector3.Distance(transform.position, targetPos) >= 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed*Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime); 
         }
-        transform.position = target;
+        transform.position = goalTarget;
         isMove = false;
     }
 }
