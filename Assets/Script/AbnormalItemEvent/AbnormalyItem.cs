@@ -68,27 +68,27 @@ public class AbnormalyItem : MonoBehaviour
         }
     }
 
-    protected virtual void ChangeObjectEventReset(GameObject target = null)
+    protected virtual void ChangeObjectEventReset()
     {
         if (!defaultObj.gameObject.activeSelf)
             defaultObj.gameObject.SetActive(true);
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(false);
     }
-    protected virtual void ChangePositionEventReset(GameObject target = null)
+    protected virtual void ChangePositionEventReset()
     {
         defaultObj.transform.Translate(-targetPos);
     }
-    protected virtual void ChangeRotationEventReset(GameObject target = null)
+    protected virtual void ChangeRotationEventReset()
     {
         defaultObj.transform.Rotate(-targetRot);
     }
-    protected virtual void EnabledObjectEventReset(GameObject target = null)
+    protected virtual void EnabledObjectEventReset()
     {
         if (targetObj.gameObject.activeSelf)
             targetObj.gameObject.SetActive(false);
     }
-    protected virtual void MoveObjectEventReset(GameObject target = null)
+    protected virtual void MoveObjectEventReset()
     {
         defaultObj.transform.Translate(-targetPos);
     }
