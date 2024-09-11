@@ -141,7 +141,7 @@ public class AbnormalyItem : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPos) >= 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed*Time.deltaTime);
-            yield return Time.deltaTime; 
+            yield return new WaitForSeconds(Time.deltaTime); 
         }
         transform.position = target;
         isMove = false;
