@@ -7,6 +7,7 @@ public class Abnormaly : MonoBehaviour, AbnormalInterface
     public bool isClear = false;
     public bool playAbnormal = false;
 
+    [SerializeField]
     protected GameObject[] abnormalObjects;
     
     protected delegate void PlayDelegate();
